@@ -93,6 +93,16 @@ dialog::backdrop{background:rgba(20,30,22,.6)}
 .cert p{margin:0;color:var(--muted)}
 .cert .tag{display:inline-block;margin-top:.5rem;font-size:.85rem;font-weight:700;color:var(--link)}
 .view{display:block;margin-top:.75rem;font-weight:700}
+.xlist{list-style:none;margin:0 0 2rem;padding:0;border-top:1px solid var(--line)}
+.xlist li{display:grid;grid-template-columns:1fr auto;gap:.25rem 1.5rem;padding:.9rem .25rem;border-bottom:1px solid var(--line)}
+.xlist b{font-size:1.05rem}
+.xlist .role{display:block;color:var(--muted)}
+.xlist .dt{color:var(--muted);text-align:right;white-space:nowrap}
+.xlist .ds{grid-column:1/-1;color:var(--muted);margin:.25rem 0 0;font-size:.95rem}
+@media(max-width:36rem){.xlist li{grid-template-columns:1fr}.xlist .dt{text-align:left;white-space:normal}}
+.xarrows{justify-content:flex-end;margin-bottom:.5rem}
+.shot{flex:0 0 min(18rem,75%);scroll-snap-align:start;aspect-ratio:4/3;border-radius:.9rem;border:1px solid var(--line);background:var(--pop) center/cover no-repeat;display:grid;place-items:center;color:#1E3326;font-weight:700;font-size:.85rem}
+.org .odesc{font-weight:400;font-size:.92rem;color:var(--muted);margin-top:.4rem}
 .org-id{display:flex;align-items:center;gap:.9rem}
 .logo{width:3.5rem;height:3.5rem;flex:none;border-radius:.7rem;background:#fff center/contain no-repeat;border:1px solid var(--line);display:grid;place-items:center;font-size:.7rem;font-weight:700;color:#5E6E37}
 @media (prefers-reduced-motion: reduce){.pm,.item-wrap{transition:none}}
@@ -157,7 +167,11 @@ footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;border-top:1px sol
   <section id="exp" aria-labelledby="exp-h">
     <h2 id="exp-h">Experience</h2>
     <div class="tabs" id="tabs" role="tablist" aria-label="Experience categories"></div>
-    <div class="items" id="items" role="tabpanel"></div>
+    <div id="items" role="tabpanel">
+      <ul class="xlist" id="xlist"></ul>
+      <div class="arrows xarrows"><button class="btn" id="phPrev" type="button" aria-label="Scroll photos left">&#8249;</button><button class="btn" id="phNext" type="button" aria-label="Scroll photos right">&#8250;</button></div>
+      <div class="strip" id="photoStrip" tabindex="0" aria-label="Photos, scroll sideways"></div>
+    </div>
   </section>
 
   <section id="orgs" aria-labelledby="orgs-h">
@@ -239,25 +253,39 @@ const ME = {
   bio: "Write 3 to 4 sentences about who you are, what you study at PUP, what you care about, and what you want to do next.",
   photo: "",
   groups: [
-    { title: "Student life", items: [
-      { t: "Course and year level", d: "One line about what your days are like." },
-      { t: "A typical week", d: "One line about classes, projects or routines." } ] },
-    { title: "Attended", items: [
-      { t: "Event name", d: "Month Year, venue or online" },
-      { t: "Event name", d: "Month Year, venue or online" } ] },
-    { title: "Volunteered", items: [
-      { t: "Event name", d: "Month Year, what you did" },
-      { t: "Event name", d: "Month Year, what you did" } ] },
-    { title: "Organizing", items: [
-      { t: "Event name", d: "Your role on the core team, Month Year" },
-      { t: "Event name", d: "Your role on the core team, Month Year" } ] },
-    { title: "Achievements", items: [
-      { t: "eGovPH Hackathon 2026", d: "Top 30, Top 10 and Top 5 finalist", text: "Advanced from the Top 30 finalists to the Top 10 and then the Top 5 finalists at the eGovPH Hackathon 2026." } ] }
+    { title: "Attended", photos: [], items: [
+      { t: "Build It to Connect It: Hardware Assembly Workshop", d: "February 28, 2026" },
+      { t: "CISCO Networking Academy Networking Basics Course Completion", d: "February 10, 2026" },
+      { t: "Think like AI: Gemini Study Jam", d: "November 30, 2025" },
+      { t: "Alfred’s Engine Room: Crafting Tomorrow’s Ventures – Kickoff and Ideation Event", d: "November 22, 2025" } ] },
+    { title: "Volunteered", photos: [], items: [
+      { t: "AWS Community Day 2026", role: "Operations Volunteer", d: "August 22, 2026" },
+      { t: "2026 PSUCCESS Technological Revolution in Education (2026) TechRevEd Research Conference", role: "Usher & Runner", d: "February 18–20, 2026" },
+      { t: "UNLEASH Philippines", role: "Operations Volunteer", d: "September 18, 2025" },
+      { t: "IoT Conference Philippines", role: "Operations Volunteer", d: "September 10, 2025" },
+      { t: "CWTS | Kalikasan, Kilos, Kabataan", role: "Spearhead Head", d: "July 15, 2025" },
+      { t: "PUP CCIS | AFK Week 2025", role: "Operations Volunteer", d: "July 6, 2025" },
+      { t: "PUP CCIS | CCISalubong Week", role: "Program & Production Volunteer", d: "March 5, 2025" } ] },
+    { title: "Organizing", photos: [], items: [
+      { t: "Build Over Nights Hackathon – AWS User Group Philippines", role: "Secretary Head", d: "October 3–4, 2026" },
+      { t: "Packet Capture: Beneath the Network", role: "Programs Lead · Network x Security Capture the Flag Competition", d: "October 4, 12 and 26, 2026" },
+      { t: "Build Nights Kiro x Quick Quest: Quick Quest 10-Week Workshop", role: "Programs Manager", d: "June 19 – August 21, 2026" },
+      { t: "SyncWEB Application", role: "Frontend Developer & UI/UX", d: "May 2026", text: "A mini project, designed and built a responsive internal announcement board and resource hub tailored for student organization leads using modern web standards for a workshop." } ] },
+    { title: "Achievements", photos: [], items: [
+      { t: "eGovPH Hackathon 2026", role: "Top 30, Top 10 and Top 5 finalist · Research & Documentation", d: "July 2026", text: "Contributed core research, functional documentation, and system analysis for a government transparency and public service solution." } ] }
   ],
   orgs: [
-    { name: "Organization name", role: "Your role or position", years: "Year to Year" },
-    { name: "Organization name", role: "Your role or position", years: "Year to Year" },
-    { name: "Organization name", role: "Your role or position", years: "Year to Year" }
+    { name: "Microsoft Campus Club", role: "Associate Executive Secretary", years: "October 2026 – Present" },
+    { name: "n8n Community", role: "Workflow Department", years: "October 2026 – Present" },
+    { name: "AWS User Group BuildHers+", role: "Ambassador & SheLeads", years: "February 2026 – Present" },
+    { name: "WorkFlow PH", role: "Assistant Secretary", years: "February 2026 – Present" },
+    { name: "Google Developer Groups – PUP", role: "Deputy Chief Administrative Officer, Secretariat (2026–2027 term)", years: "November 2025 – Present" },
+    { name: "ARK – AcademiTech Research and Knowledge", role: "Social Media Manager", years: "November 2025 – Present", desc: "Leads social media initiatives by planning and scheduling content, aligning creative output with organizational goals, and tracking performance to boost engagement and visibility." },
+    { name: "AWSCC PUP", role: "Community Relations Resident, Relations Office", years: "October 2025 – Present" },
+    { name: "AWS User Group e:Novators", role: "Associate Executive Secretary", years: "January 2025 – Present", desc: "Collaborates with the Executive Secretary to optimize administrative processes, maintaining databases, organizing official records, and providing cross-office documentation support to enhance operational efficiency and compliance." },
+    { name: "WEB Community", role: "Overall Co-Lead, Secretary and Compliance", years: "January 2025 – Present" },
+    { name: "Cisco NetConnect PUP – Manila", role: "Programs Manager, Operations", years: "December 2024 – Present" },
+    { name: "DEVCON Manila", role: "Operations Team Member", years: "January 2025 (past role)" }
   ],
   certs: [
     { title: "Workato Foundations Level 1", issuer: "Workato Academy", date: "October 13, 2026", file: "certificates/workato1.pdf" },
@@ -355,31 +383,24 @@ else $("photo").textContent = (first[0] || "") + (last[0] || "");
 const tabBtns = [];
 function showTab(n) {
   tabBtns.forEach((b, k) => { b.setAttribute("aria-selected", k === n); b.tabIndex = k === n ? 0 : -1; });
-  const box = $("items"); box.innerHTML = "";
-  ME.groups[n].items.forEach(i => {
-    const hover = window.matchMedia("(hover: hover)").matches;
-    const it = document.createElement("div"); it.className = "item";
-    const hd = document.createElement("button"); hd.type = "button"; hd.className = "item-h"; hd.setAttribute("aria-expanded", "false");
-    const left = document.createElement("span");
-    const st = document.createElement("span"); st.className = "st"; st.textContent = i.t;
-    const sm = document.createElement("small"); sm.textContent = i.d;
-    left.append(st, sm);
-    const pm = document.createElement("span"); pm.className = "pm"; pm.setAttribute("aria-hidden", "true"); pm.textContent = "+";
-    hd.append(left, pm);
-    const body = document.createElement("div"); body.className = "item-body";
-    const pic = document.createElement("div"); pic.className = "pic"; pic.setAttribute("role", "img"); pic.setAttribute("aria-label", i.t);
-    if (i.img) pic.style.backgroundImage = "url(" + i.img + ")"; else pic.textContent = "Add picture";
-    const p = document.createElement("p"); p.textContent = i.text || "Write one paragraph about what happened, what you did and what you learned.";
-    body.append(pic, p);
-    const inn = document.createElement("div"); inn.className = "item-in"; inn.appendChild(body);
-    const wrap = document.createElement("div"); wrap.className = "item-wrap"; wrap.appendChild(inn);
-    it.append(hd, wrap); box.appendChild(it);
-    const set = on => { it.classList.toggle("on", on); hd.setAttribute("aria-expanded", on); };
-    hd.addEventListener("click", e => { if (!(hover && e.detail > 0)) set(!it.classList.contains("on")); });
-    if (hover) {
-      it.addEventListener("mouseenter", () => set(true));
-      it.addEventListener("mouseleave", () => set(false));
-    }
+  const g = ME.groups[n];
+  const ul = $("xlist"); ul.innerHTML = "";
+  g.items.forEach(i => {
+    const li = document.createElement("li");
+    const left = document.createElement("div");
+    const b = document.createElement("b"); b.textContent = i.t; left.appendChild(b);
+    if (i.role) { const r = document.createElement("span"); r.className = "role"; r.textContent = i.role; left.appendChild(r); }
+    const dt = document.createElement("span"); dt.className = "dt"; dt.textContent = i.d;
+    li.append(left, dt);
+    if (i.text) { const p = document.createElement("p"); p.className = "ds"; p.textContent = i.text; li.appendChild(p); }
+    ul.appendChild(li);
+  });
+  const strip = $("photoStrip"); strip.innerHTML = ""; strip.scrollLeft = 0;
+  const pics = g.photos && g.photos.length ? g.photos : ["", "", ""];
+  pics.forEach(src => {
+    const sh = document.createElement("div"); sh.className = "shot"; sh.setAttribute("role", "img"); sh.setAttribute("aria-label", g.title + " photo");
+    if (src) sh.style.backgroundImage = "url(" + src + ")"; else sh.textContent = "Photo";
+    strip.appendChild(sh);
   });
 }
 ME.groups.forEach((g, n) => {
@@ -394,6 +415,9 @@ ME.groups.forEach((g, n) => {
   tabBtns.push(b); $("tabs").appendChild(b);
 });
 showTab(0);
+const pstep = dir => $("photoStrip").scrollBy({ left: dir * $("photoStrip").clientWidth * 0.8, behavior: "smooth" });
+$("phPrev").addEventListener("click", () => pstep(-1));
+$("phNext").addEventListener("click", () => pstep(1));
 ME.orgs.forEach(o => {
   const d = document.createElement("div"); d.className = "org";
   const h = document.createElement("h3"); h.textContent = o.name;
@@ -404,7 +428,9 @@ ME.orgs.forEach(o => {
   const lg = document.createElement("div"); lg.className = "logo"; lg.setAttribute("role", "img"); lg.setAttribute("aria-label", o.name + " logo");
   if (o.logo) lg.style.backgroundImage = "url(" + o.logo + ")"; else lg.textContent = "Logo";
   id.append(lg, h);
-  r.append(t, g); d.append(id, r); $("orgGrid").appendChild(d);
+  r.append(t, g);
+  if (o.desc) { const ds = document.createElement("p"); ds.className = "odesc"; ds.textContent = o.desc; r.appendChild(ds); }
+  d.append(id, r); $("orgGrid").appendChild(d);
 });
 ME.certs.forEach(c => {
   const d = document.createElement("article"); d.className = "cert";
