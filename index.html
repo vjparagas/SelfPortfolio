@@ -89,6 +89,7 @@ dialog::backdrop{background:rgba(20,30,22,.6)}
 .cert h3{font-size:1.15rem;margin-bottom:.3rem}
 .cert p{margin:0;color:var(--muted)}
 .cert .tag{display:inline-block;margin-top:.5rem;font-size:.85rem;font-weight:700;color:var(--link)}
+.view{display:block;margin-top:.75rem;font-weight:700}
 .org-id{display:flex;align-items:center;gap:.9rem}
 .logo{width:3.5rem;height:3.5rem;flex:none;border-radius:.7rem;background:#fff center/contain no-repeat;border:1px solid var(--line);display:grid;place-items:center;font-size:.7rem;font-weight:700;color:#5E6E37}
 @media (prefers-reduced-motion: reduce){.pm,.item-wrap{transition:none}}
@@ -215,17 +216,22 @@ footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;border-top:1px sol
 <script>
 /* ===== EDIT THIS BLOCK: your details go here ===== */
 const ME = {
-  name: "Your Name",
-  title: "Your Course or Role",
+  name: "VJ P. Evangelista",
+  title: "Bachelor of Science in Information Technology",
+  cardTitle: "BS Information Technology, 3rd Year",
   school: "Polytechnic University of the Philippines",
-  tagline: "I make things that are useful and easy to understand.",
-  email: "you@example.com",
-  phone: "+63 900 000 0000",
-  location: "Manila, Philippines",
+  org: "PUP",
+  tagline: "3rd Year student.",
+  email: "evangelistavjp@gmail.com",
+  email2: "vjpevangelista@iskolarngbayan.pup.edu.ph",
+  phone: "+639567669852",
+  location: "Pines Peak, Pines Street, Barangka Ilaya, Mandaluyong City",
+  shortLoc: "Mandaluyong City",
   website: "",
   links: [
-    { label: "LinkedIn", url: "https://linkedin.com/in/yourname" },
-    { label: "GitHub", url: "https://github.com/yourname" }
+    { label: "Facebook", url: "https://www.facebook.com/vjpevangelista" },
+    { label: "GitHub", url: "https://github.com/vjparagas" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/vj-evangelista-66a873349/" }
   ],
   bio: "Write 3 to 4 sentences about who you are, what you study at PUP, what you care about, and what you want to do next.",
   photo: "",
@@ -243,8 +249,7 @@ const ME = {
       { t: "Event name", d: "Your role on the core team, Month Year" },
       { t: "Event name", d: "Your role on the core team, Month Year" } ] },
     { title: "Achievements", items: [
-      { t: "Award or recognition", d: "Who gave it, Month Year" },
-      { t: "Award or recognition", d: "Who gave it, Month Year" } ] }
+      { t: "eGovPH Hackathon 2026", d: "Top 30, Top 10 and Top 5 finalist", text: "Advanced from the Top 30 finalists to the Top 10 and then the Top 5 finalists at the eGovPH Hackathon 2026." } ] }
   ],
   orgs: [
     { name: "Organization name", role: "Your role or position", years: "Year to Year" },
@@ -252,11 +257,11 @@ const ME = {
     { name: "Organization name", role: "Your role or position", years: "Year to Year" }
   ],
   certs: [
-    { title: "Certificate name", issuer: "Issued by", date: "Month Year" },
-    { title: "Certificate name", issuer: "Issued by", date: "Month Year" },
-    { title: "Certificate name", issuer: "Issued by", date: "Month Year" },
-    { title: "Certificate name", issuer: "Issued by", date: "Month Year" },
-    { title: "Certificate name", issuer: "Issued by", date: "Month Year" }
+    { title: "Workato Foundations Level 1", issuer: "Workato Academy", date: "October 13, 2026", file: "certificates/workato1.pdf" },
+    { title: "Workato Foundations Level 2", issuer: "Workato Academy", date: "October 13, 2026", file: "certificates/workato2.pdf" },
+    { title: "Introduction to Cloud", issuer: "Cognitive Class", date: "October 13, 2026", file: "certificates/introtocloud.pdf" },
+    { title: "Cloud Essentials", issuer: "IBM", date: "October 13, 2026", file: "certificates/cloudessentials.pdf" },
+    { title: "Networking Basics Course - Certificate of Completion", issuer: "CISCO Networking Academy", date: "February 10, 2026", file: "certificates/networkingbasics.pdf" }
   ]
 };
 /* ================================================= */
@@ -274,9 +279,9 @@ $("role").append(" " + ME.tagline);
 document.title = ME.name + " – Portfolio";
 
 $("cName").textContent = ME.name;
-$("cTitle").textContent = ME.title;
+$("cTitle").textContent = ME.cardTitle || ME.title;
 $("cMeta").innerHTML = "";
-[ME.email, ME.phone, ME.location].forEach(t => {
+[ME.email, ME.phone, ME.shortLoc || ME.location].forEach(t => {
   if (!t) return;
   const d = document.createElement("div"); d.textContent = t; $("cMeta").appendChild(d);
 });
@@ -286,8 +291,8 @@ const vcard = [
   "BEGIN:VCARD", "VERSION:3.0",
   "N:" + last + ";" + first + ";;;",
   "FN:" + ME.name,
-  "TITLE:" + ME.title,
-  "ORG:" + ME.school,
+  "TITLE:" + (ME.cardTitle || ME.title),
+  "ORG:" + (ME.org || ME.school),
   ME.phone ? "TEL:" + ME.phone : "",
   ME.email ? "EMAIL:" + ME.email : "",
   ME.website ? "URL:" + ME.website : "",
@@ -301,8 +306,8 @@ try {
 
 /* pop-up business card */
 const dlg = $("cardDlg");
-$("dName").textContent = ME.name; $("dTitle").textContent = ME.title;
-[ME.email, ME.phone, ME.location].forEach(t => {
+$("dName").textContent = ME.name; $("dTitle").textContent = ME.cardTitle || ME.title;
+[ME.email, ME.phone, ME.shortLoc || ME.location].forEach(t => {
   if (!t) return;
   const d = document.createElement("div"); d.textContent = t; $("dMeta").appendChild(d);
 });
@@ -334,6 +339,7 @@ function row(k, v, href, copy) {
   $("contactList").appendChild(li);
 }
 if (ME.email) row("Email", ME.email, "mailto:" + ME.email, true);
+if (ME.email2) row("PUP email", ME.email2, "mailto:" + ME.email2, true);
 if (ME.phone) row("Phone", ME.phone, "tel:" + ME.phone.replace(/\s/g, ""), true);
 if (ME.location) row("Location", ME.location);
 if (ME.website) row("Website", ME.website, ME.website);
@@ -400,12 +406,17 @@ ME.orgs.forEach(o => {
 ME.certs.forEach(c => {
   const d = document.createElement("article"); d.className = "cert";
   const pic = document.createElement("div"); pic.className = "cert-pic"; pic.setAttribute("role", "img"); pic.setAttribute("aria-label", c.title);
-  if (c.img) pic.style.backgroundImage = "url(" + c.img + ")"; else pic.textContent = "Add certificate picture";
+  if (c.img) pic.style.backgroundImage = "url(" + c.img + ")"; else pic.textContent = c.file ? "PDF certificate" : "Add certificate picture";
   const box = document.createElement("div"); box.className = "cert-txt";
   const h = document.createElement("h3"); h.textContent = c.title;
   const t = document.createElement("p"); t.textContent = c.issuer;
   const g = document.createElement("span"); g.className = "tag"; g.textContent = c.date;
-  box.append(h, t, g); d.append(pic, box); $("certGrid").appendChild(d);
+  box.append(h, t, g);
+  if (c.file) {
+    const a = document.createElement("a"); a.href = c.file; a.target = "_blank"; a.rel = "noopener";
+    a.className = "view"; a.textContent = "View certificate (PDF)"; box.appendChild(a);
+  }
+  d.append(pic, box); $("certGrid").appendChild(d);
 });
 const step = dir => $("certGrid").scrollBy({ left: dir * $("certGrid").clientWidth * 0.8, behavior: "smooth" });
 $("certPrev").addEventListener("click", () => step(-1));
