@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{
+  --bg:#F5EADA; --surface:#FBF6EC; --ink:#2C4C37; --muted:#5E6E37; --line:#929E7E;
+  --accent:#2C4C37; --accent-ink:#F5EADA; --link:#2C4C37; --pop:#929E7E;
+  --hero-bg:transparent; --hero-line:transparent; --hero-ink:#2C4C37; --hero-sub:#2C4C37;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --bg:#1B2E22; --surface:#243B2C; --ink:#F5EADA; --muted:#B4BEA0; --line:#35503F;
+  --accent:#929E7E; --accent-ink:#1B2E22; --link:#B4BEA0; --pop:#929E7E;
+  --hero-bg:transparent; --hero-line:transparent; --hero-ink:#F5EADA; --hero-sub:#B4BEA0; color-scheme:dark;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 "DM Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","DM Sans",system-ui,sans-serif;line-height:1.05;margin:0}
+a{color:var(--link)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem}
+section{padding:4rem 0}
+
+/* hero */
+.hero{padding:3rem 0 2rem;margin-top:1rem;background:none;border:0;color:var(--hero-ink)}
+.hero h1{font-size:clamp(3rem,11vw,7.5rem);font-weight:800;letter-spacing:-.04em}
+.hero .role{font-size:clamp(1.15rem,3vw,1.6rem);margin:1.25rem 0 0;color:var(--hero-sub);max-width:34rem}
+.hero .role b{font-weight:800}
+.hero{display:grid;gap:2rem;align-items:center}
+@media(min-width:48rem){.hero{grid-template-columns:auto 1fr}}
+.photo{width:min(15rem,60vw);aspect-ratio:1;border-radius:50%;background:var(--pop) center/cover no-repeat;border:4px solid var(--ink);display:grid;place-items:center;font:800 4rem "Bricolage Grotesque",sans-serif;color:#1E3326}
+.bio{max-width:44rem;font-size:1.15rem;margin:0}
+.groups{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr))}
+.grp{background:var(--surface);border:1px solid var(--line);border-radius:.9rem;padding:1.25rem}
+.grp h3{font-size:1.3rem;margin-bottom:.75rem}
+.grp ul{margin:0;padding-left:1.1rem;display:grid;gap:.7rem}
+.grp li span{display:block;color:var(--muted);font-size:.92rem}
+.tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem}
+.tab{font:700 .95rem "DM Sans",sans-serif;background:transparent;color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:.5rem 1rem;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+.items{display:grid;gap:.75rem}
+details.item{background:var(--surface);border:1px solid var(--line);border-radius:.9rem;overflow:hidden}
+details.item summary{cursor:pointer;list-style:none;padding:1rem 1.25rem;display:flex;justify-content:space-between;gap:1rem;align-items:center}
+details.item summary::-webkit-details-marker{display:none}
+details.item summary::after{content:"+";font:700 1.5rem/1 "DM Sans",sans-serif;flex:none}
+details.item[open] summary::after{content:"\2013"}
+.st{font-weight:700;font-size:1.1rem;display:block}
+details.item small{display:block;color:var(--muted);font-size:.9rem}
+.item-body{display:grid;gap:1rem;padding:0 1.25rem 1.25rem;grid-template-columns:1fr}
+@media(min-width:48rem){.item-body{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start}}
+.pic{aspect-ratio:4/3;border-radius:.7rem;background:var(--pop) center/cover no-repeat;display:grid;place-items:center;color:#1E3326;font-size:.9rem;font-weight:700}
+.item-body p{margin:0}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:.9rem;overflow:hidden}
+.item-h{width:100%;display:flex;justify-content:space-between;gap:1rem;align-items:center;text-align:left;background:none;border:0;color:inherit;font:inherit;cursor:pointer;padding:1rem 1.25rem}
+.item-h:focus-visible{outline-offset:-3px}
+.item-h small{display:block;color:var(--muted);font-size:.9rem;font-weight:400}
+.pm{font:700 1.6rem/1 "DM Sans",sans-serif;flex:none;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.item.on .pm{transform:rotate(45deg)}
+.item-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.2,.8,.2,1)}
+.item.on .item-wrap{grid-template-rows:1fr}
+.topbar{display:flex;justify-content:flex-end;gap:.5rem;margin-top:1rem}
+dialog{border:0;padding:0;background:transparent;width:min(26rem,92vw);max-width:none;color:var(--ink)}
+dialog::backdrop{background:rgba(20,30,22,.6)}
+.dlg-in{background:var(--surface);border:1px solid var(--line);border-radius:1.2rem;padding:1.25rem;display:grid;gap:1rem;justify-items:center}
+.mc{width:100%;aspect-ratio:7/4;border-radius:1.1rem;padding:1.4rem;display:flex;flex-direction:column;justify-content:space-between}
+.dnote{color:var(--muted);font-size:.9rem}
+.item-in{overflow:hidden;min-height:0}
+.orglist{display:grid;border-top:1px solid var(--line)}
+.org{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:1rem .25rem;border-bottom:1px solid var(--line);align-items:baseline}
+.org h3{font-size:1.25rem}
+.org p{margin:0;font-weight:700}
+.yrs{display:block;font-size:.9rem;color:var(--muted)}
+.sec-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:.75rem}
+.sec-head h2{margin:0}
+.arrows{display:flex;gap:.5rem}
+.arrows .btn{font-size:1.2rem;line-height:1;padding:.4rem .85rem}
+.strip{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:.25rem .25rem 1rem;margin:0 -.25rem;scrollbar-color:var(--line) transparent}
+.cert{flex:0 0 min(22rem,80%);scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-radius:.9rem;overflow:hidden}
+.cert-pic{aspect-ratio:4/3;background:var(--pop) center/cover no-repeat;display:grid;place-items:center;color:#1E3326;font-weight:700;font-size:.9rem;text-align:center;padding:1rem}
+.cert-txt{padding:1rem 1.1rem 1.1rem}
+.cert h3{font-size:1.15rem;margin-bottom:.3rem}
+.cert p{margin:0;color:var(--muted)}
+.cert .tag{display:inline-block;margin-top:.5rem;font-size:.85rem;font-weight:700;color:var(--link)}
+.org-id{display:flex;align-items:center;gap:.9rem}
+.logo{width:3.5rem;height:3.5rem;flex:none;border-radius:.7rem;background:#fff center/contain no-repeat;border:1px solid var(--line);display:grid;place-items:center;font-size:.7rem;font-weight:700;color:#5E6E37}
+@media (prefers-reduced-motion: reduce){.pm,.item-wrap{transition:none}}
+.marker{display:inline-block;background:var(--pop);color:#1E3326;padding:.1em .45em;border-radius:.4em;font-weight:700;font-size:.95rem;margin-bottom:1.25rem}
+
+/* business card */
+.card-area{display:grid;gap:2.5rem;grid-template-columns:1fr;align-items:center}
+@media(min-width:48rem){.card-area{grid-template-columns:1fr 1.15fr}}
+h2{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.03em;margin-bottom:.75rem}
+.lede{color:var(--muted);max-width:30rem;margin:0 0 1.25rem}
+.flip{perspective:1200px;width:100%;max-width:26rem;aspect-ratio:7/4;background:none;border:0;padding:0;cursor:pointer;font:inherit;color:inherit;text-align:left}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.flip.on .flip-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:1.1rem;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:1.4rem;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 18px 40px -18px rgba(45,45,36,.45)}
+.front{background:#5E6E37;color:#F5EADA}
+.front .nm{font:800 clamp(1.6rem,6vw,2.1rem)/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.03em}
+.front .tt{font-size:1rem;opacity:.9;margin-top:.35rem}
+.front .meta{font-size:.9rem;line-height:1.45;opacity:.95}
+.back{background:var(--surface);transform:rotateY(180deg);align-items:center;justify-content:center;border:1px solid var(--line);gap:.6rem;text-align:center}
+.qr{background:#fff;padding:.6rem;border-radius:.7rem;line-height:0}
+.qr canvas,.qr img{width:min(9.5rem,38vw)!important;height:auto!important}
+.back small{color:var(--muted);font-size:.85rem}
+.hint{color:var(--muted);font-size:.9rem;margin-top:.9rem}
+
+/* contact */
+.contact-list{list-style:none;margin:0;padding:0;display:grid;gap:.75rem}
+.contact-list li{display:flex;align-items:center;gap:1rem;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:.9rem;padding:.9rem 1.1rem;flex-wrap:wrap}
+.contact-list .k{font-weight:700;min-width:5.5rem}
+.contact-list .v{flex:1;min-width:0;overflow-wrap:anywhere}
+.btn{font:700 .9rem "DM Sans",sans-serif;background:var(--accent);color:var(--accent-ink);border:0;border-radius:.6rem;padding:.5rem .9rem;cursor:pointer}
+.btn:hover{background:#5E6E37;color:#F5EADA}
+.theme{display:block;margin:1rem 0 0 auto}
+
+/* work */
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));margin-top:1.5rem}
+.proj{color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:.9rem;padding:1.25rem}
+.proj h3{font-size:1.35rem;margin-bottom:.4rem}
+.proj p{margin:0;color:var(--muted);font-size:1rem}
+.proj .tag{display:inline-block;margin-top:.8rem;font-size:.85rem;font-weight:700;color:var(--link)}
+footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (prefers-reduced-motion: reduce){.flip-inner{transition:none}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="topbar"><button class="btn" id="cardBtn" type="button">Business card</button><button class="btn" id="themeBtn" type="button">Dark mode</button></div>
+
+  <header class="hero">
+    <div class="photo" id="photo" role="img" aria-label="Profile photo"></div>
+    <div>
+      <span class="marker" id="school"></span>
+      <h1 id="name"></h1>
+      <p class="role" id="role"></p>
+    </div>
+  </header>
+
+  <section id="about" aria-labelledby="about-h">
+    <h2 id="about-h">About me</h2>
+    <p class="bio" id="bio"></p>
+  </section>
+
+  <section id="exp" aria-labelledby="exp-h">
+    <h2 id="exp-h">Experience</h2>
+    <div class="tabs" id="tabs" role="tablist" aria-label="Experience categories"></div>
+    <div class="items" id="items" role="tabpanel"></div>
+  </section>
+
+  <section id="orgs" aria-labelledby="orgs-h">
+    <h2 id="orgs-h">Organizations</h2>
+    <div class="orglist" id="orgGrid"></div>
+  </section>
+
+  <section id="certs" aria-labelledby="certs-h">
+    <div class="sec-head"><h2 id="certs-h">Certificates</h2><div class="arrows"><button class="btn" id="certPrev" type="button" aria-label="Scroll certificates left">&#8249;</button><button class="btn" id="certNext" type="button" aria-label="Scroll certificates right">&#8250;</button></div></div>
+    <div class="strip" id="certGrid" tabindex="0" aria-label="Certificates, scroll sideways"></div>
+  </section>
+
+  <section id="card" class="panel p-green" aria-labelledby="card-h">
+    <div class="card-area">
+      <div>
+        <h2 id="card-h">My business card</h2>
+        <p class="lede">Scan the code on the back to save my contact details straight to your phone.</p>
+        <button class="btn" id="flipBtn" type="button" aria-pressed="false">Flip card</button>
+        <p class="hint">You can also tap the card to flip it.</p>
+      </div>
+      <button class="flip" id="flip" type="button" aria-label="Business card. Tap to flip.">
+        <div class="flip-inner">
+          <div class="face front">
+            <div><div class="nm" id="cName"></div><div class="tt" id="cTitle"></div></div>
+            <div class="meta" id="cMeta"></div>
+          </div>
+          <div class="face back">
+            <div class="qr" id="qr"></div>
+            <small>Scan to save my contact</small>
+          </div>
+        </div>
+      </button>
+    </div>
+  </section>
+
+  <section id="contact" class="panel p-clay" aria-labelledby="contact-h">
+    <h2 id="contact-h">Contact me</h2>
+    <p class="lede">The fastest way to reach me is by email.</p>
+    <ul class="contact-list" id="contactList"></ul>
+  </section>
+
+
+
+  <footer id="foot"></footer>
+
+  <dialog id="cardDlg" aria-label="Business card">
+    <div class="dlg-in">
+      <div class="mc front">
+        <div><div class="nm" id="dName"></div><div class="tt" id="dTitle"></div></div>
+        <div class="meta" id="dMeta"></div>
+      </div>
+      <div class="qr" id="qr2"></div>
+      <small class="dnote">Scan to save my contact</small>
+      <button class="btn" id="dClose" type="button">Close</button>
+    </div>
+  </dialog>
+</main>
+
+<script>
+/* ===== EDIT THIS BLOCK: your details go here ===== */
+const ME = {
+  name: "Your Name",
+  title: "Your Course or Role",
+  school: "Polytechnic University of the Philippines",
+  tagline: "I make things that are useful and easy to understand.",
+  email: "you@example.com",
+  phone: "+63 900 000 0000",
+  location: "Manila, Philippines",
+  website: "",
+  links: [
+    { label: "LinkedIn", url: "https://linkedin.com/in/yourname" },
+    { label: "GitHub", url: "https://github.com/yourname" }
+  ],
+  bio: "Write 3 to 4 sentences about who you are, what you study at PUP, what you care about, and what you want to do next.",
+  photo: "",
+  groups: [
+    { title: "Student life", items: [
+      { t: "Course and year level", d: "One line about what your days are like." },
+      { t: "A typical week", d: "One line about classes, projects or routines." } ] },
+    { title: "Attended", items: [
+      { t: "Event name", d: "Month Year, venue or online" },
+      { t: "Event name", d: "Month Year, venue or online" } ] },
+    { title: "Volunteered", items: [
+      { t: "Event name", d: "Month Year, what you did" },
+      { t: "Event name", d: "Month Year, what you did" } ] },
+    { title: "Organizing", items: [
+      { t: "Event name", d: "Your role on the core team, Month Year" },
+      { t: "Event name", d: "Your role on the core team, Month Year" } ] },
+    { title: "Achievements", items: [
+      { t: "Award or recognition", d: "Who gave it, Month Year" },
+      { t: "Award or recognition", d: "Who gave it, Month Year" } ] }
+  ],
+  orgs: [
+    { name: "Organization name", role: "Your role or position", years: "Year to Year" },
+    { name: "Organization name", role: "Your role or position", years: "Year to Year" },
+    { name: "Organization name", role: "Your role or position", years: "Year to Year" }
+  ],
+  certs: [
+    { title: "Certificate name", issuer: "Issued by", date: "Month Year" },
+    { title: "Certificate name", issuer: "Issued by", date: "Month Year" },
+    { title: "Certificate name", issuer: "Issued by", date: "Month Year" },
+    { title: "Certificate name", issuer: "Issued by", date: "Month Year" },
+    { title: "Certificate name", issuer: "Issued by", date: "Month Year" }
+  ]
+};
+/* ================================================= */
+
+const $ = id => document.getElementById(id);
+const parts = ME.name.trim().split(/\s+/);
+const last = parts.length > 1 ? parts.pop() : "";
+const first = parts.join(" ");
+
+$("school").textContent = ME.school;
+$("name").textContent = ME.name;
+$("role").innerHTML = "<b></b> " + "";
+$("role").firstChild.textContent = ME.title + ".";
+$("role").append(" " + ME.tagline);
+document.title = ME.name + " – Portfolio";
+
+$("cName").textContent = ME.name;
+$("cTitle").textContent = ME.title;
+$("cMeta").innerHTML = "";
+[ME.email, ME.phone, ME.location].forEach(t => {
+  if (!t) return;
+  const d = document.createElement("div"); d.textContent = t; $("cMeta").appendChild(d);
+});
+
+/* QR code encodes a vCard so phones offer "Add contact" */
+const vcard = [
+  "BEGIN:VCARD", "VERSION:3.0",
+  "N:" + last + ";" + first + ";;;",
+  "FN:" + ME.name,
+  "TITLE:" + ME.title,
+  "ORG:" + ME.school,
+  ME.phone ? "TEL:" + ME.phone : "",
+  ME.email ? "EMAIL:" + ME.email : "",
+  ME.website ? "URL:" + ME.website : "",
+  "END:VCARD"
+].filter(Boolean).join("\n");
+try {
+  new QRCode($("qr"), { text: vcard, width: 180, height: 180, colorDark: "#1E3326", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+} catch (e) {
+  $("qr").textContent = "QR code could not load.";
+}
+
+/* pop-up business card */
+const dlg = $("cardDlg");
+$("dName").textContent = ME.name; $("dTitle").textContent = ME.title;
+[ME.email, ME.phone, ME.location].forEach(t => {
+  if (!t) return;
+  const d = document.createElement("div"); d.textContent = t; $("dMeta").appendChild(d);
+});
+try {
+  new QRCode($("qr2"), { text: vcard, width: 180, height: 180, colorDark: "#1E3326", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+} catch (e) {
+  $("qr2").textContent = "QR code could not load.";
+}
+$("cardBtn").addEventListener("click", () => dlg.showModal());
+$("dClose").addEventListener("click", () => dlg.close());
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+
+/* contact rows */
+function row(k, v, href, copy) {
+  const li = document.createElement("li");
+  const kk = document.createElement("span"); kk.className = "k"; kk.textContent = k;
+  const vv = document.createElement("span"); vv.className = "v";
+  if (href) { const a = document.createElement("a"); a.href = href; a.textContent = v; if (href.startsWith("http")) { a.target = "_blank"; a.rel = "noopener"; } vv.appendChild(a); }
+  else vv.textContent = v;
+  li.append(kk, vv);
+  if (copy) {
+    const b = document.createElement("button"); b.type = "button"; b.className = "btn"; b.textContent = "Copy";
+    b.onclick = async () => {
+      try { await navigator.clipboard.writeText(v); b.textContent = "Copied"; } catch (e) { b.textContent = "Copy failed"; }
+      setTimeout(() => b.textContent = "Copy", 1600);
+    };
+    li.appendChild(b);
+  }
+  $("contactList").appendChild(li);
+}
+if (ME.email) row("Email", ME.email, "mailto:" + ME.email, true);
+if (ME.phone) row("Phone", ME.phone, "tel:" + ME.phone.replace(/\s/g, ""), true);
+if (ME.location) row("Location", ME.location);
+if (ME.website) row("Website", ME.website, ME.website);
+ME.links.forEach(l => row(l.label, l.url.replace(/^https?:\/\//, ""), l.url));
+
+/* bio, photo, experience, certificates */
+$("bio").textContent = ME.bio;
+if (ME.photo) $("photo").style.backgroundImage = "url(" + ME.photo + ")";
+else $("photo").textContent = (first[0] || "") + (last[0] || "");
+const tabBtns = [];
+function showTab(n) {
+  tabBtns.forEach((b, k) => { b.setAttribute("aria-selected", k === n); b.tabIndex = k === n ? 0 : -1; });
+  const box = $("items"); box.innerHTML = "";
+  ME.groups[n].items.forEach(i => {
+    const hover = window.matchMedia("(hover: hover)").matches;
+    const it = document.createElement("div"); it.className = "item";
+    const hd = document.createElement("button"); hd.type = "button"; hd.className = "item-h"; hd.setAttribute("aria-expanded", "false");
+    const left = document.createElement("span");
+    const st = document.createElement("span"); st.className = "st"; st.textContent = i.t;
+    const sm = document.createElement("small"); sm.textContent = i.d;
+    left.append(st, sm);
+    const pm = document.createElement("span"); pm.className = "pm"; pm.setAttribute("aria-hidden", "true"); pm.textContent = "+";
+    hd.append(left, pm);
+    const body = document.createElement("div"); body.className = "item-body";
+    const pic = document.createElement("div"); pic.className = "pic"; pic.setAttribute("role", "img"); pic.setAttribute("aria-label", i.t);
+    if (i.img) pic.style.backgroundImage = "url(" + i.img + ")"; else pic.textContent = "Add picture";
+    const p = document.createElement("p"); p.textContent = i.text || "Write one paragraph about what happened, what you did and what you learned.";
+    body.append(pic, p);
+    const inn = document.createElement("div"); inn.className = "item-in"; inn.appendChild(body);
+    const wrap = document.createElement("div"); wrap.className = "item-wrap"; wrap.appendChild(inn);
+    it.append(hd, wrap); box.appendChild(it);
+    const set = on => { it.classList.toggle("on", on); hd.setAttribute("aria-expanded", on); };
+    hd.addEventListener("click", e => { if (!(hover && e.detail > 0)) set(!it.classList.contains("on")); });
+    if (hover) {
+      it.addEventListener("mouseenter", () => set(true));
+      it.addEventListener("mouseleave", () => set(false));
+    }
+  });
+}
+ME.groups.forEach((g, n) => {
+  const b = document.createElement("button"); b.type = "button"; b.className = "tab"; b.id = "tab" + n;
+  b.setAttribute("role", "tab"); b.textContent = g.title;
+  b.addEventListener("click", () => showTab(n));
+  b.addEventListener("keydown", e => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    const m = (n + (e.key === "ArrowRight" ? 1 : ME.groups.length - 1)) % ME.groups.length;
+    showTab(m); tabBtns[m].focus();
+  });
+  tabBtns.push(b); $("tabs").appendChild(b);
+});
+showTab(0);
+ME.orgs.forEach(o => {
+  const d = document.createElement("div"); d.className = "org";
+  const h = document.createElement("h3"); h.textContent = o.name;
+  const r = document.createElement("div");
+  const t = document.createElement("p"); t.textContent = o.role;
+  const g = document.createElement("span"); g.className = "yrs"; g.textContent = o.years;
+  const id = document.createElement("div"); id.className = "org-id";
+  const lg = document.createElement("div"); lg.className = "logo"; lg.setAttribute("role", "img"); lg.setAttribute("aria-label", o.name + " logo");
+  if (o.logo) lg.style.backgroundImage = "url(" + o.logo + ")"; else lg.textContent = "Logo";
+  id.append(lg, h);
+  r.append(t, g); d.append(id, r); $("orgGrid").appendChild(d);
+});
+ME.certs.forEach(c => {
+  const d = document.createElement("article"); d.className = "cert";
+  const pic = document.createElement("div"); pic.className = "cert-pic"; pic.setAttribute("role", "img"); pic.setAttribute("aria-label", c.title);
+  if (c.img) pic.style.backgroundImage = "url(" + c.img + ")"; else pic.textContent = "Add certificate picture";
+  const box = document.createElement("div"); box.className = "cert-txt";
+  const h = document.createElement("h3"); h.textContent = c.title;
+  const t = document.createElement("p"); t.textContent = c.issuer;
+  const g = document.createElement("span"); g.className = "tag"; g.textContent = c.date;
+  box.append(h, t, g); d.append(pic, box); $("certGrid").appendChild(d);
+});
+const step = dir => $("certGrid").scrollBy({ left: dir * $("certGrid").clientWidth * 0.8, behavior: "smooth" });
+$("certPrev").addEventListener("click", () => step(-1));
+$("certNext").addEventListener("click", () => step(1));
+
+$("foot").textContent = "© " + new Date().getFullYear() + " " + ME.name;
+
+/* flip */
+const flip = $("flip"), fb = $("flipBtn");
+function toggle() {
+  const on = flip.classList.toggle("on");
+  fb.setAttribute("aria-pressed", on);
+  fb.textContent = on ? "Show front" : "Flip card";
+}
+flip.addEventListener("click", toggle);
+fb.addEventListener("click", toggle);
+
+/* light is the default; this switches to dark and back */
+$("themeBtn").addEventListener("click", () => {
+  const r = document.documentElement;
+  const dark = r.getAttribute("data-theme") !== "dark";
+  r.setAttribute("data-theme", dark ? "dark" : "light");
+  $("themeBtn").textContent = dark ? "Light mode" : "Dark mode";
+});
+</script>
+</body>
+</html>
