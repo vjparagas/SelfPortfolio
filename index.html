@@ -26,15 +26,15 @@ body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 "DM S
 h1,h2,h3{font-family:"Bricolage Grotesque","DM Sans",system-ui,sans-serif;line-height:1.05;margin:0}
 a{color:var(--link)}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-.wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem}
-section{padding:4rem 0}
+.wrap{max-width:72rem;margin:0 auto;padding:0 clamp(1.25rem,5vw,3.5rem)}
+section{padding:4.5rem 0 1.5rem}
 
 /* hero */
-.hero{padding:3rem 0 2rem;margin-top:1rem;background:none;border:0;color:var(--hero-ink)}
-.hero h1{font-size:clamp(3rem,11vw,7.5rem);font-weight:800;letter-spacing:-.04em}
-.hero .role{font-size:clamp(1.15rem,3vw,1.6rem);margin:1.25rem 0 0;color:var(--hero-sub);max-width:34rem}
+.hero{padding:4rem 0 3rem;margin-top:1.5rem;background:none;border:0;color:var(--hero-ink)}
+.hero h1{font-size:clamp(3rem,8vw,6rem);font-weight:800;letter-spacing:-.04em}
+.hero .role{font-size:clamp(1.15rem,3vw,1.6rem);margin:1.75rem 0 0;color:var(--hero-sub);max-width:34rem}
 .hero .role b{font-weight:800}
-.hero{display:grid;gap:2rem;align-items:center}
+.hero{display:grid;gap:2.5rem 4rem;align-items:center}
 @media(min-width:48rem){.hero{grid-template-columns:auto 1fr}}
 .photo{width:min(15rem,60vw);aspect-ratio:1;border-radius:50%;background:var(--pop) center/cover no-repeat;border:4px solid var(--ink);display:grid;place-items:center;font:800 4rem "Bricolage Grotesque",sans-serif;color:#1E3326}
 .bio{max-width:44rem;font-size:1.15rem;margin:0}
@@ -43,7 +43,7 @@ section{padding:4rem 0}
 .grp h3{font-size:1.3rem;margin-bottom:.75rem}
 .grp ul{margin:0;padding-left:1.1rem;display:grid;gap:.7rem}
 .grp li span{display:block;color:var(--muted);font-size:.92rem}
-.tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem}
+.tabs{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.75rem}
 .tab{font:700 .95rem "DM Sans",sans-serif;background:transparent;color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:.5rem 1rem;cursor:pointer}
 .tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
 .items{display:grid;gap:.75rem}
@@ -66,7 +66,7 @@ details.item small{display:block;color:var(--muted);font-size:.9rem}
 .item.on .pm{transform:rotate(45deg)}
 .item-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.2,.8,.2,1)}
 .item.on .item-wrap{grid-template-rows:1fr}
-.topbar{display:flex;justify-content:flex-end;gap:.5rem;margin-top:1rem}
+.topbar{display:flex;justify-content:flex-end;gap:.5rem;margin-top:1.5rem}
 dialog{border:0;padding:0;background:transparent;width:min(26rem,92vw);max-width:none;color:var(--ink)}
 dialog::backdrop{background:rgba(20,30,22,.6)}
 .dlg-in{background:var(--surface);border:1px solid var(--line);border-radius:1.2rem;padding:1.25rem;display:grid;gap:1rem;justify-items:center}
@@ -78,7 +78,7 @@ dialog::backdrop{background:rgba(20,30,22,.6)}
 .org h3{font-size:1.25rem}
 .org p{margin:0;font-weight:700}
 .yrs{display:block;font-size:.9rem;color:var(--muted)}
-.sec-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:.75rem}
+.sec-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem}
 .sec-head h2{margin:0}
 .arrows{display:flex;gap:.5rem}
 .arrows .btn{font-size:1.2rem;line-height:1;padding:.4rem .85rem}
@@ -92,12 +92,12 @@ dialog::backdrop{background:rgba(20,30,22,.6)}
 .org-id{display:flex;align-items:center;gap:.9rem}
 .logo{width:3.5rem;height:3.5rem;flex:none;border-radius:.7rem;background:#fff center/contain no-repeat;border:1px solid var(--line);display:grid;place-items:center;font-size:.7rem;font-weight:700;color:#5E6E37}
 @media (prefers-reduced-motion: reduce){.pm,.item-wrap{transition:none}}
-.marker{display:inline-block;background:var(--pop);color:#1E3326;padding:.1em .45em;border-radius:.4em;font-weight:700;font-size:.95rem;margin-bottom:1.25rem}
+.marker{display:inline-block;background:var(--pop);color:#1E3326;padding:.1em .45em;border-radius:.4em;font-weight:700;font-size:.95rem;margin-bottom:1.5rem}
 
 /* business card */
 .card-area{display:grid;gap:2.5rem;grid-template-columns:1fr;align-items:center}
 @media(min-width:48rem){.card-area{grid-template-columns:1fr 1.15fr}}
-h2{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.03em;margin-bottom:.75rem}
+h2{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.03em;margin-bottom:1.5rem}
 .lede{color:var(--muted);max-width:30rem;margin:0 0 1.25rem}
 .flip{perspective:1200px;width:100%;max-width:26rem;aspect-ratio:7/4;background:none;border:0;padding:0;cursor:pointer;font:inherit;color:inherit;text-align:left}
 .flip-inner{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
