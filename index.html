@@ -29,7 +29,7 @@ a{color:var(--link)}
 section{padding:4.5rem 0 1.5rem}
 
 /* hero */
-.hero{padding:4rem 0 3rem;margin-top:1.5rem;background:none;border:0;color:var(--hero-ink)}
+.hero{padding:3rem 0 3rem;margin-top:2.5rem;background:none;border:0;color:var(--hero-ink)}
 .hero h1{font-size:clamp(3rem,8vw,6rem);font-weight:800;letter-spacing:-.04em}
 .hero .role{font-size:clamp(1.15rem,3vw,1.6rem);margin:1.75rem 0 0;color:var(--hero-sub);max-width:34rem}
 .hero .role b{font-weight:800}
@@ -65,7 +65,7 @@ details.item small{display:block;color:var(--muted);font-size:.9rem}
 .item.on .pm{transform:rotate(45deg)}
 .item-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.2,.8,.2,1)}
 .item.on .item-wrap{grid-template-rows:1fr}
-.topbar{display:flex;justify-content:flex-end;gap:.5rem;margin-top:1.5rem}
+.topbar{display:flex;justify-content:flex-end;gap:.5rem;margin:clamp(1.5rem,4vw,2.5rem) 0 0;position:relative;z-index:5}
 dialog{border:0;padding:0;background:transparent;width:min(26rem,92vw);max-width:none;color:var(--ink)}
 dialog::backdrop{background:rgba(20,30,22,.6)}
 .dlg-in{background:var(--surface);border:1px solid var(--line);border-radius:1.2rem;padding:1.25rem;display:grid;gap:1rem;justify-items:center}
@@ -73,10 +73,11 @@ dialog::backdrop{background:rgba(20,30,22,.6)}
 .dnote{color:var(--muted);font-size:.9rem}
 .item-in{overflow:hidden;min-height:0}
 .orglist{display:grid;border-top:1px solid var(--line)}
-.org{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:1rem .25rem;border-bottom:1px solid var(--line);align-items:baseline}
+.org{display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.5rem;padding:1rem .25rem;border-bottom:1px solid var(--line);align-items:center}
+@media(max-width:40rem){.org{grid-template-columns:1fr}}
 .org h3{font-size:1.25rem}
-.org p{margin:0;font-weight:700}
-.yrs{display:block;font-size:.9rem;color:var(--muted)}
+.org p{margin:0;font-weight:700;line-height:1.35}
+.yrs{display:block;font-size:.9rem;color:var(--muted);margin-top:.15rem}
 .sec-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem}
 .sec-head h2{margin:0}
 .arrows{display:flex;gap:.5rem}
@@ -98,6 +99,7 @@ dialog::backdrop{background:rgba(20,30,22,.6)}
 .xlist .role{display:block;color:var(--muted)}
 .xlist .dt{color:var(--muted);text-align:right;white-space:nowrap}
 .xlist .ds{grid-column:1/-1;color:var(--muted);margin:.25rem 0 0;font-size:.95rem}
+.xlist .xpic{grid-column:1/-1;display:block;width:100%;max-width:32rem;height:auto;border-radius:.7rem;margin:.5rem 0 .25rem}
 @media(max-width:36rem){.xlist li{grid-template-columns:1fr}.xlist .dt{text-align:left;white-space:normal}}
 .xarrows{justify-content:flex-end;margin-bottom:.5rem}
 .shot{flex:0 0 min(18rem,75%);scroll-snap-align:start;aspect-ratio:4/3;border-radius:.9rem;border:1px solid var(--line);background:var(--pop) center/cover no-repeat;display:grid;place-items:center;color:#1E3326;font-weight:700;font-size:.85rem}
@@ -150,7 +152,7 @@ main{counter-reset:sec}
 section h2::before{counter-increment:sec;content:"0" counter(sec) " /";display:block;font:700 .85rem "DM Sans",sans-serif;letter-spacing:.18em;color:var(--link);margin-bottom:.5rem}
 section h2::after{content:"";display:block;width:3.5rem;height:6px;border-radius:6px;background:var(--pop);margin-top:.7rem}
 .hero{position:relative;isolation:isolate}
-.hero::before{content:"";position:absolute;z-index:-1;right:-5rem;top:-2rem;width:28rem;height:28rem;max-width:80vw;border-radius:62% 38% 55% 45% / 48% 58% 42% 52%;background:var(--pop);opacity:.3}
+.hero::before{content:"";position:absolute;z-index:-1;right:-5rem;top:.5rem;width:28rem;height:28rem;max-width:80vw;border-radius:62% 38% 55% 45% / 48% 58% 42% 52%;background:var(--pop);opacity:.3}
 .hero::after{content:"";position:absolute;z-index:-1;left:-1rem;top:0;width:8rem;height:6rem;background-image:radial-gradient(var(--pop) 2.5px,transparent 3px);background-size:20px 20px;opacity:.6}
 @media(max-width:48rem){.hero::after{display:none}}
 .photo{box-shadow:14px 14px 0 var(--pop)}
@@ -282,16 +284,33 @@ const ME = {
     { label: "GitHub", url: "https://github.com/vjparagas" },
     { label: "LinkedIn", url: "https://www.linkedin.com/in/vj-evangelista-66a873349/" }
   ],
-  bio: "Write 3 to 4 sentences about who you are, what you study at PUP, what you care about, and what you want to do next.",
+  bio: "VJ P. Evangelista is a third-year BS Information Technology student at the Polytechnic University of the Philippines with a passion for project management, and building inclusive tech communities. She is an active member of AWS User Group BuildHers+, supporting women in tech through event facilitation and operations. She also holds leadership and secretariat roles across several student and developer communities, and has helped organize hackathons, workshops, and capture-the-flag competitions. Her work includes research and documentation for eGuide, a transit guide that reached the Top 5 of the eGovPH Hackathon 2026. She continues to grow her skills through certifications, conferences, and volunteering, and hopes to create spaces where everyone can learn and build together.",
   photo: "",
   groups: [
     { title: "Attended", photos: [], items: [
+      { t: "Echelon Philippines 2026", d: "August 2026", text: "", img: "" },
+      { t: "Philippine Blockchain Week 2026 - decoded: Deployed", d: "June 2026", text: "", img: "" },
+      { t: "Build with AI", d: "May 2026", text: "", img: "" },
+      { t: "Sparkpoint 2026: General Assembly of Microsoft Student Community - NU Laguna", d: "May 2026", text: "", img: "" },
+      { t: "Build on Stellar Bootcamp Philippines", d: "April 2026", text: "", img: "" },
+      { t: "Arduino Day Philippines 2026", d: "March 2026", text: "", img: "" },
+      { t: "Gen AI to Z: A Career Summit in an AI-Driven World", d: "March 2026", text: "", img: "" },
       { t: "Build It to Connect It: Hardware Assembly Workshop", d: "February 28, 2026" },
       { t: "CISCO Networking Academy Networking Basics Course Completion", d: "February 10, 2026" },
+      { t: "New Year, New Heights: Celebrate Growth, Launch Careers", d: "December 2025", text: "", img: "" },
       { t: "Think like AI: Gemini Study Jam", d: "November 30, 2025" },
-      { t: "Alfred’s Engine Room: Crafting Tomorrow’s Ventures – Kickoff and Ideation Event", d: "November 22, 2025" } ] },
+      { t: "YGG Play Summit 2025", d: "November 2025", text: "", img: "" },
+      { t: "Globe #GoForIt Dream Summit", d: "November 2025", text: "", img: "" },
+      { t: "AWS Student Community Day 2025", d: "September 2025", text: "", img: "" },
+      { t: "Crypto Vision Conference 2025: Decode the Future", d: "April 2025", text: "", img: "" },
+      { t: "Philippines Tech Career Fest", d: "March 2025", text: "", img: "" } ] },
     { title: "Volunteered", photos: [], items: [
       { t: "AWS Community Day 2026", role: "Operations Volunteer", d: "August 22, 2026" },
+      { t: "BuildHers+ July Meetup: OpenClaw on AWS Workshop", role: "Registration (Operations Department)", d: "July 2026", text: "", img: "" },
+      { t: "Code with Color: Build What Matters", role: "Registration (Operations Department)", d: "June 2026", text: "", img: "" },
+      { t: "HERmazing Race: Run the World (AWSUG Buildhers+ Event)", role: "Facilitator (Operations Department)", d: "March 2026", text: "", img: "" },
+      { t: "Breaking in, Building Forward (AWSUG Buildhers+ Event)", role: "Registration (Operations Department)", d: "March 2026", text: "", img: "" },
+      { t: "Building Agentic AI Solutions", role: "Host", d: "March 2026", text: "", img: "" },
       { t: "2026 PSUCCESS Technological Revolution in Education (2026) TechRevEd Research Conference", role: "Usher & Runner", d: "February 18–20, 2026" },
       { t: "UNLEASH Philippines", role: "Operations Volunteer", d: "September 18, 2025" },
       { t: "IoT Conference Philippines", role: "Operations Volunteer", d: "September 10, 2025" },
@@ -302,7 +321,9 @@ const ME = {
       { t: "Build Over Nights Hackathon – AWS User Group Philippines", role: "Secretary Head", d: "October 3–4, 2026" },
       { t: "Packet Capture: Beneath the Network", role: "Programs Lead · Network x Security Capture the Flag Competition", d: "October 4, 12 and 26, 2026" },
       { t: "Build Nights Kiro x Quick Quest: Quick Quest 10-Week Workshop", role: "Programs Manager", d: "June 19 – August 21, 2026" },
-      { t: "SyncWEB Application", role: "Frontend Developer & UI/UX", d: "May 2026", text: "A mini project, designed and built a responsive internal announcement board and resource hub tailored for student organization leads using modern web standards for a workshop." } ] },
+      { t: "SyncWEB Application", role: "Frontend Developer & UI/UX", d: "May 2026", text: "A mini project, designed and built a responsive internal announcement board and resource hub tailored for student organization leads using modern web standards for a workshop." },
+      { t: "AWSUG e:Novators PH General Onboarding 2026 - Brick by Brick: Building the Blocks of Innovation!", role: "Associate Executive Secretary", d: "May 2026", text: "", img: "" },
+      { t: "Alfred’s Engine Room: Crafting Tomorrow’s Ventures (Kick-off and Ideation 2025)", role: "Associate Executive Secretary · AWS User Group e:Novators", d: "November 2025", text: "", img: "" } ] },
     { title: "Achievements", photos: [], items: [
       { t: "eGovPH Hackathon 2026 – eGuide", role: "Top 30, Top 10 and Top 5 finalist · Research & Documentation", d: "July 2026", text: "eGuide is a citizen-first transit guide that turns Metro Manila’s daily commute guesswork into certainty. It brings real-time arrivals, crowd levels, and cashless payments across the MRT, LRT, buses, and EDSA Carousel into one unified, government-linked platform. I contributed core research, functional documentation, and system analysis." } ] }
   ],
@@ -410,6 +431,7 @@ function showTab(n) {
     const dt = document.createElement("span"); dt.className = "dt"; dt.textContent = i.d;
     li.append(left, dt);
     if (i.text) { const p = document.createElement("p"); p.className = "ds"; p.textContent = i.text; li.appendChild(p); }
+    if (i.img) { const im = document.createElement("img"); im.className = "xpic"; im.src = i.img; im.alt = i.t + " photo"; im.loading = "lazy"; im.onerror = () => im.remove(); li.appendChild(im); }
     ul.appendChild(li);
   });
   const strip = $("photoStrip"); strip.innerHTML = ""; strip.scrollLeft = 0;
