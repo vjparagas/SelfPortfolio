@@ -315,7 +315,8 @@ const ME = {
   ],
   bio: "VJ P. Evangelista is a third-year BS Information Technology student at the Polytechnic University of the Philippines with a passion for project management, and building inclusive tech communities. She is an active member of AWS User Group BuildHers+, supporting women in tech through event facilitation and operations. She also holds leadership and secretariat roles across several student and developer communities, and has helped organize hackathons, workshops, and capture-the-flag competitions. Her work includes research and documentation for eGuide, a transit guide that reached the Top 5 of the eGovPH Hackathon 2026. She continues to grow her skills through certifications, conferences, and volunteering, and hopes to create spaces where everyone can learn and build together.",
   photo: "",
-  photoLight: "images/profile/light.jpg",
+  photoVersion: 2, /* bump this number whenever you replace a profile picture */
+  photoLight: "images/profile/light1.jpg",
   photoDark: "images/profile/dark.jpg",
   groups: [
     { title: "Attended", photos: ["images/attended/arduino.jpg", "images/attended/bwai.jpg", "images/attended/cncpworkshop.jpg", "images/attended/cncpworkshop1.jpg", "images/attended/crypto.jpg", "images/attended/cryptovision.jpg", "images/attended/echelon.jpg", "images/attended/genaitoz.jpg", "images/attended/globe.jpg", "images/attended/newyearnewheights.jpg", "images/attended/pbw.jpg", "images/attended/sparkpoint.jpg", "images/attended/stellar.jpg", "images/attended/studentcomday.jpg", "images/attended/ygg.jpg"], items: [
@@ -458,9 +459,10 @@ function setPhoto(dark) {
   const initials = (first[0] || "") + (last[0] || "");
   if (!src) { el.textContent = initials; return; }
   const im = new Image();
-  im.onload = () => { el.style.backgroundImage = "url(\"" + src + "\")"; el.textContent = ""; };
   im.onerror = () => { el.style.backgroundImage = ""; el.textContent = initials; };
-  im.src = src;
+  const url = src + (src.includes("?") ? "&" : "?") + "v=" + (ME.photoVersion || 1);
+  im.onload = () => { el.style.backgroundImage = "url(\"" + url + "\")"; el.textContent = ""; };
+  im.src = url;
 }
 setPhoto(document.documentElement.getAttribute("data-theme") === "dark");
 const tabBtns = [];
